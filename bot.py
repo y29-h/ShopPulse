@@ -10,7 +10,6 @@ bot = telebot.TeleBot(TOKEN)
 
 PRODUCTS_FILE = "products.json"
 if not os.path.exists(PRODUCTS_FILE):
-
     with open(PRODUCTS_FILE, "w") as f:
         json.dump({}, f)
 
@@ -21,11 +20,15 @@ with open(PRODUCTS_FILE, "r") as f:
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     markup = InlineKeyboardMarkup()
-    for category in products.keys():
-        markup.add(InlineKeyboardButton(category, callback_data=f"category:{category}"))
+    markup.add(
+        InlineKeyboardButton(
+            "Перейти в мини-приложение", 
+            url="https://example.com"  
+        )
+    )
     bot.send_message(
         message.chat.id, 
-        "Добро пожаловать в ShopBot! Выберите категорию:", 
+        "Добро пожаловать в ShopBot! Вы можете перейти в наше мини-приложение, чтобы начать использовать его:", 
         reply_markup=markup
     )
 
